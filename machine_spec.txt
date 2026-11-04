@@ -1,0 +1,30 @@
+# Machine specification (Q1). Fill in every field; give units. Fill in N/A if not applicable.
+
+CPU model                       :
+Microarchitecture               :
+Physical cores                  :
+Logical cores (hardware threads):
+Performance / efficiency cores  :
+Base clock (GHz)                :
+Max single-core clock (GHz)     :
+All-core clock under load (GHz) :
+SIMD instruction set and width  :
+FMA units per core              :
+Vector registers per core       :
+L1 data cache (per core)        :
+L2 cache (size, shared by)      :
+L3 cache (size, shared by)      :
+Cache line size (bytes)         :
+RAM size (GB)                   :
+RAM type, speed (MT/s), channels:
+Operating system                :
+Compiler and version            :
+
+# Derived (show the calculation in report.pdf)
+Peak FP32 GFLOP/s, one core     :
+Peak FP32 GFLOP/s, all cores    :
+Memory bandwidth (GB/s)         :
+Ridge point, one core (FLOP/B)  :
+Ridge point, all cores (FLOP/B) :
+
+
