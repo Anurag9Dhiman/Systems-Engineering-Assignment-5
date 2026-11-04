@@ -2,7 +2,7 @@
 #
 # Path to your C compiler. Use the LATEST clang, for example:
 #   Linux:  /usr/bin/clang-23        macOS (Homebrew):  /opt/homebrew/opt/llvm/bin/clang
-CC = clang
+CC = /opt/homebrew/opt/llvm/bin/clang
 
 CFLAGS = -O3 -march=native
 OMP    = -fopenmp

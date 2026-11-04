@@ -1,30 +1,28 @@
 # Machine specification (Q1). Fill in every field; give units. Fill in N/A if not applicable.
 
-CPU model                       :
-Microarchitecture               :
-Physical cores                  :
-Logical cores (hardware threads):
-Performance / efficiency cores  :
-Base clock (GHz)                :
-Max single-core clock (GHz)     :
-All-core clock under load (GHz) :
-SIMD instruction set and width  :
-FMA units per core              :
-Vector registers per core       :
-L1 data cache (per core)        :
-L2 cache (size, shared by)      :
-L3 cache (size, shared by)      :
-Cache line size (bytes)         :
-RAM size (GB)                   :
-RAM type, speed (MT/s), channels:
-Operating system                :
-Compiler and version            :
+CPU model                       : Apple M4 (MacBook Air, Mac16,12)
+Microarchitecture               : Apple M4 "Donan" (hw.cpufamily 0x6f5129ac), AArch64; clang target apple-m4
+Physical cores                  : 10
+Logical cores (hardware threads): 10 (no SMT)
+Performance / efficiency cores  : 4 performance / 6 efficiency
+Base clock (GHz)                : N/A (Apple publishes none; DVFS range from ioreg: P 0.912-4.464, E 0.900-2.892)
+Max single-core clock (GHz)     : 4.41 measured, P-core (top DVFS state 4.464); E-core 2.892 from ioreg
+All-core clock under load (GHz) : P 3.82, E 2.34 measured with all 10 cores busy (P 3.92 with only the 4 P-cores busy)
+SIMD instruction set and width  : NEON 128-bit (4 FP32 lanes); SME2 with streaming SVE 512-bit (16 FP32 lanes), ZA = 4 tiles of 16 x 16 FP32
+FMA units per core              : P-core 4, E-core 2 (128-bit, measured); plus one SME unit per cluster, shared by its cores (P cluster 3.93 FMOPA/ns measured)
+Vector registers per core       : 32 (V0-V31 NEON, 128-bit); in streaming mode 32 Z registers, 512-bit, plus the ZA array
+L1 data cache (per core)        : P-core 128 KiB, E-core 64 KiB
+L2 cache (size, shared by)      : P cluster 16 MiB, shared by 4 P-cores; E cluster 4 MiB, shared by 6 E-cores
+L3 cache (size, shared by)      : N/A (no CPU L3)
+Cache line size (bytes)         : 128
+RAM size (GB)                   : 16
+RAM type, speed (MT/s), channels: LPDDR5X, 7500 MT/s, 128-bit bus in total (usually listed as 2 x 64-bit; Apple publishes only 120 GB/s). macOS reports the type as "LPDDR5"
+Operating system                : macOS 15.5 (24F74), Darwin 24.5.0
+Compiler and version            : Homebrew clang 23.1.4 (flags -O3 -march=native, resolving to apple-m4 with +sme2)
 
 # Derived (show the calculation in report.pdf)
-Peak FP32 GFLOP/s, one core     :
-Peak FP32 GFLOP/s, all cores    :
-Memory bandwidth (GB/s)         :
-Ridge point, one core (FLOP/B)  :
-Ridge point, all cores (FLOP/B) :
-
-
+Peak FP32 GFLOP/s, one core     : 141.1 NEON (4.41 GHz x 4 FMA x 4 lanes x 2); 2014 with SME2 FMOPA (measured)
+Peak FP32 GFLOP/s, all cores    : 713.6 NEON (4 x 3.82 x 32 + 6 x 2.34 x 16); 2350 with SME2 FMOPA (measured, both clusters)
+Memory bandwidth (GB/s)         : 120 (7500 MT/s x 16 B); measured read: 70 one thread, 74 P cluster, 109 all cores
+Ridge point, one core (FLOP/B)  : 1.18 NEON (141.1 / 120); 16.8 SME2 (2014 / 120)
+Ridge point, all cores (FLOP/B) : 5.95 NEON (713.6 / 120); 19.6 SME2 (2350 / 120)
